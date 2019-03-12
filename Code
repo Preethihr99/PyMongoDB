@@ -1,0 +1,185 @@
+import pymongo
+from tkinter import *
+import tkinter.messagebox as tm
+
+import tkinter as tk
+
+
+
+
+class LoginFrame(Frame):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.label_username = Label(self, text="Username")
+        self.label_password = Label(self, text="Password")
+        self.entry_username = Entry(self)
+        self.entry_password = Entry(self, show="*")
+
+        self.label_username.grid(row=4, sticky=E)
+        self.label_password.grid(row=5, sticky=E)
+        
+        self.entry_username.grid(row=4, column=1)
+        self.entry_password.grid(row=5, column=1)
+        
+        self.checkbox = Checkbutton(self, text="Keep me logged in")
+        self.checkbox.grid(columnspan=2)
+        
+
+        self.logbtn = Button(self, text="Login", command=self._login_btn_clicked)
+        self.logbtn.grid(columnspan=2)
+
+        self.pack()
+
+    def _login_btn_clicked(self):
+        # print("Clicked")
+        username = self.entry_username.get()
+        password = self.entry_password.get()
+
+        # print(username, password)
+
+        if username == "mongo" and password == "python":
+           
+
+            root=Tk()
+            root.geometry("400x400")
+            root.configure(background='black')
+            
+            
+            
+            def createDB():
+                  client = pymongo.MongoClient("mongodb://localhost:27017")
+    
+            def insertvalues():
+                  client = pymongo.MongoClient("mongodb://localhost:27017")
+                  db = client.patientdetails
+                  collection = db.patients
+                  patientId = input('Enter patient id :')
+                  patientName = input('Enter Name :')
+                  patientAge = input('Enter age :')
+                  patientAddress = input('Enter Address :')
+                  patientdisease = input('Enter disease :')
+                  if patientId == "" or patientName == "" or patientAge == "" or patientAddress == "" or patientdisease == "":
+                      print ("No field should be empty")
+                  else:
+                      db.patients.insert_one(
+                       {
+                          "id": patientId,
+                          "name":patientName,
+                          "age":patientAge,
+                          "Address":patientAddress,
+                          "disease":patientdisease
+                       })
+                      print ("\nInserted data successfully\n")
+    
+            def ReadfromDB():
+                   client = pymongo.MongoClient("mongodb://localhost:27017")
+                   db = client.patientdetails
+                   collection = db.patients
+                   try:
+                       empCol = db.patients.find()
+                       print ("\n All data from patientdetails Database \n")
+                       for emp in empCol:
+                          print (emp)
+
+                   except Exception:
+                          print ("errr")
+            def updateDB():
+                    client = pymongo.MongoClient("mongodb://localhost:27017")
+                    db = client.patientdetails
+                    collection = db.patients
+                    try:
+                        criteria = input('\nEnter id to update\n')
+                        if criteria == "":
+                            print ("Please enter the id for updation")
+                        else:
+                            name = input('\nEnter name to update\n')
+                            age = input('\nEnter age to update\n')
+                            Address = input('\nEnter address to update\n')
+                            disease = input('\nEnter disease to update\n')
+
+                            db.patients.update_one(
+                                 {"id": criteria},
+                                   {
+                                     "$set": {
+                                     "name":name,
+                                     "age":age,
+                                     "Address":Address,
+                                     "disease":disease
+                                              }
+                                    }
+                                )
+                            print ("\nRecords updated successfully\n")    
+    
+                    except Exception:
+                            print ("error")
+
+            def findDB():       
+                  client = pymongo.MongoClient("mongodb://localhost:27017/")
+                  db = client.patientdetails
+                  collection = db.patients
+                  try:
+                     criteria = input('\nEnter patient id to find\n')
+                     if criteria == "":
+                         print ("Please enter the id")
+                     else:
+                         mydoc = db.patients.find({"id":criteria})
+                         for x in mydoc:
+                            print(x)
+                  except Exception:
+                        print ("error")
+
+
+
+#Function to sort records according to name 
+            def sortDB():
+                  client = pymongo.MongoClient("mongodb://localhost:27017/")
+                  db = client.patientdetails
+                  collection = db.patients
+
+                  mydoc = db.patients.find().sort("name")
+
+                  for x in mydoc:
+                       print(x)
+# Function to delete record from mongo db
+            def deleteDB():
+                 client = pymongo.MongoClient("mongodb://localhost:27017")
+                 db = client.patientdetails
+                 collection = db.patients
+                 try:
+                     criteria = input('\nEnter patient id to delete\n')
+                     if criteria == "":
+                         print ("Please enter the id")
+                     else:
+                         db.patients.delete_many({"id":criteria})
+                         print ("\nDeletion successful\n") 
+                 except Exception:
+                       print ("rrr")   
+            B1 = Button(root, text = "Insert patient details", fg='black', bg='skyblue', command = insertvalues)
+            B1.place(x = 140,y = 50)
+            B2 = Button(root, text = "Display patient details",fg='black', bg='skyblue', command = ReadfromDB)
+            B2.place(x = 140,y = 100)
+            B3 = Button(root, text = "Update patient details", fg='black', bg='skyblue', command = updateDB)
+            B3.place(x = 140,y = 150)
+            B4 = Button(root, text = "Delete patient details", fg='black', bg='skyblue', command = deleteDB)
+            B4.place(x = 140,y = 200)
+            B5 = Button(root, text = "Find patient details", fg='black', bg='skyblue', command = findDB)
+            B5.place(x = 140,y = 250)
+            B6 = Button(root, text = "Sort patient details", fg='black', bg='skyblue', command = sortDB)
+            B6.place(x=140,y=300)
+
+            root.mainloop()
+        else:
+         tm.showerror("Login error", "Incorrect username")
+
+
+root = Tk()
+root.geometry("300x300")
+root.configure(background='black')
+lf = LoginFrame(root)
+root.mainloop()
+
+
+
+
+
