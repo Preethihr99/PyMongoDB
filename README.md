@@ -24,6 +24,17 @@ This project’s objective is to create a miniature model of the software used i
 3. Allows fast access to data.
 4. Patient database is maintained which will be helpful for authentication
 
+FLOW DIAGRAM OF THE PROJECT :
+
+![db1](https://user-images.githubusercontent.com/47209023/55679247-dc86e200-5925-11e9-94d9-c801e82c372d.PNG)
+
+OUTPUT SNAPSHOTS :
+
+![db2](https://user-images.githubusercontent.com/47209023/55679253-e577b380-5925-11e9-8158-2ad9eb68fdaf.PNG)
+![db3](https://user-images.githubusercontent.com/47209023/55679251-e577b380-5925-11e9-93de-130a279fdce4.PNG)
+![db4](https://user-images.githubusercontent.com/47209023/55679252-e577b380-5925-11e9-8891-08376b205987.PNG)
+
+
 CONCLUSION :-
 
 With the help of this project we were able to learn many new things and update our knowledge on programming. We were successful in changing the method of storing the details related to the patient details by making it automated. All the activities happening are automated. Patient details is maintained by the system. Due to computerization of all the data all operations become easy and time saving. Due to the fast access of the data we can view the details of any particular patient or information when ever needed, we can even update any particular detail of a patient as per our requirements, since all data are stored in a file there is a backup of data hence the chances of losing the data is minimized. The calculation of the number of patients admitted to Hospital is made easy which would otherwise be a very tedious method.
